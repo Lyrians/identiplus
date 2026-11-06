@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Identi+ - Biblioteca de imágenes
 // @namespace    https://identi.io/
-// @version      1.0.0
+// @version      1.1.0
 // @description  Galería local e inserción de imágenes en el editor de Identi.
 // @match        https://identi.io/cuenta/publicaciones/nueva*
 // @grant        none
@@ -22,6 +22,51 @@
     else document.addEventListener('DOMContentLoaded', () => openModal && openModal(), { once: true });
   }, true);
 
+  function addClearButton() {
+    const draft = [...document.querySelectorAll('button')].find(button => button.textContent.trim().includes('Guardar borrador'));
+    if (!draft || draft.parentElement.querySelector('[data-identiplus-clear]')) return;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.dataset.identiplusClear = 'true';
+    button.textContent = 'Limpiar todo';
+    button.className = draft.className;
+    button.addEventListener('click', () => {
+      if (!confirm('¿Querés limpiar todos los campos y el contenido de la publicación?')) return;
+      const container = draft.closest('form') || draft.closest('#post-editor');
+      if (!container) { alert('No se encontró el formulario de publicación.'); return; }
+      container.querySelectorAll('input, textarea, select').forEach(field => {
+        if (field.disabled || field.readOnly || (field instanceof HTMLInputElement && ['hidden', 'submit', 'button', 'reset', 'image'].includes(field.type))) return;
+        if (field instanceof HTMLInputElement && ['checkbox', 'radio'].includes(field.type)) {
+          field.checked = false;
+          field.dispatchEvent(new Event('change', { bubbles: true }));
+        } else if (field instanceof HTMLSelectElement) {
+          field.selectedIndex = 0;
+          field.dispatchEvent(new Event('change', { bubbles: true }));
+        } else {
+          const prototype = field instanceof HTMLTextAreaElement ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype;
+          Object.getOwnPropertyDescriptor(prototype, 'value').set.call(field, '');
+          field.dispatchEvent(new Event('input', { bubbles: true }));
+          field.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      });
+      container.querySelectorAll('[contenteditable="true"]').forEach(editor => {
+        editor.focus();
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(editor);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        document.execCommand('delete', false);
+      });
+    });
+    draft.before(button);
+  }
+  function watchEditorActions() {
+    addClearButton();
+    new MutationObserver(addClearButton).observe(document.body, { childList: true, subtree: true });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', watchEditorActions, { once: true });
+  else watchEditorActions();
   function init() {
     if (document.getElementById('identiplus-host')) return;
     const host = document.createElement('div');
@@ -221,3 +266,4 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
   else init();
 })();
+
