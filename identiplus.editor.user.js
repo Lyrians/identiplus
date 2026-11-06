@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Identi+ - Biblioteca de imágenes
 // @namespace    https://identi.io/
-// @version      1.1.0
+// @version      1.2.0
 // @description  Galería local e inserción de imágenes en el editor de Identi.
 // @match        https://identi.io/cuenta/publicaciones/nueva*
 // @grant        none
@@ -67,6 +67,29 @@
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', watchEditorActions, { once: true });
   else watchEditorActions();
+  function setupToolbarOffset() {
+    let observedHeader = null;
+    const resizeObserver = new ResizeObserver(updateToolbarOffset);
+    function updateToolbarOffset() {
+      const header = document.querySelector('header:has(nav[aria-label="Navegación principal"])');
+      const toolbar = document.querySelector('[role="toolbar"][aria-label="Formato del contenido"]');
+      if (header !== observedHeader) {
+        if (observedHeader) resizeObserver.unobserve(observedHeader);
+        observedHeader = header;
+        if (header) resizeObserver.observe(header);
+      }
+      if (header && toolbar) {
+        const height = Math.ceil(header.getBoundingClientRect().height);
+        const top = `${height}px`;
+        if (toolbar.style.top !== top) toolbar.style.top = top;
+      }
+    }
+    updateToolbarOffset();
+    window.addEventListener('resize', updateToolbarOffset);
+    new MutationObserver(updateToolbarOffset).observe(document.body, { childList: true, subtree: true });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', setupToolbarOffset, { once: true });
+  else setupToolbarOffset();
   function init() {
     if (document.getElementById('identiplus-host')) return;
     const host = document.createElement('div');
@@ -266,4 +289,5 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
   else init();
 })();
+
 
