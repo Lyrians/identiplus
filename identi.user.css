@@ -1,0 +1,257 @@
+:root{
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --radius-xl: 5px;
+    --radius-2xl: 8px;
+    --radius-3xl: 24px;
+}
+
+.gap-7{
+    gap: calc(var(--spacing) * 3);
+}
+
+form[action="/explorar"] svg{
+    width: 20px;
+    height: 20px;
+    color: #FFF;
+    transform: translateX(-2px);
+}
+
+[data-search-input]{
+    padding-left: 20px;
+    width: 40px;
+    transition: all 500ms ease;
+    border: none;
+}
+
+[data-search-input]:hover,
+[data-search-input]:focus{
+    padding-left: 36px;
+    width: 100%;
+    background: rgba(255,255,255,.1);
+}
+
+main > section > div > div{
+    margin-bottom: 10px;
+}
+
+main > section div[class="grid gap-7 lg:grid-cols-[minmax(0,1fr)_320px]"]{
+   grid-template-columns: 50% 1fr 1fr;
+}
+
+#theme-toggle,
+[data-activity-toggle],
+#account-control{
+    border: none;
+    position: relative;
+    cursor: pointer;
+}
+
+#theme-toggle svg,
+[data-activity-toggle] svg{
+    width: 20px;
+    height: 20px;
+}
+
+#account-control::before{
+    content: "";
+    width: 1px;
+    height: 100%;
+    background: rgba(255,255,255,.1);
+    position: absolute;
+    left: -6px;
+}
+
+[data-top-posts],[data-period-stats]{
+    margin-top: 0;
+}
+
+section[aria-labelledby="pinned-posts-title"]{
+    background: #3C3528;
+    border: none;
+    color: #F2D0A0;
+}
+
+section[aria-labelledby="pinned-posts-title"] div:first-child{
+    border-color: #413A2F;
+}
+
+section[aria-labelledby="pinned-posts-title"] div:first-child div p{
+    color: #CD7742;
+}
+
+section[aria-labelledby="pinned-posts-title"] ol{
+    background: #302D27; 
+}
+
+section[aria-labelledby="pinned-posts-title"] ol li{
+    border-color: #413A2F;
+    color: #F2D0A0;
+}
+
+section[aria-labelledby="pinned-posts-title"] ol li a span,
+section[aria-labelledby="pinned-posts-title"] ol li a svg{
+    color: #F2D0A0;
+}
+
+#pinned-posts-title{
+    color: #F2D0A0;
+}
+
+div[data-stats-panel="weekly"] div[class="grid sm:grid-cols-2 sm:divide-x sm:divide-slate-200/80"] ol,
+div[data-stats-panel="monthly"] div[class="grid sm:grid-cols-2 sm:divide-x sm:divide-slate-200/80"] ol{
+    border-right-color: rgba(255,255,255,.1) !important;
+}
+
+div[data-stats-panel="weekly"] div[class="grid sm:grid-cols-2 sm:divide-x sm:divide-slate-200/80"],
+div[data-stats-panel="monthly"] div[class="grid sm:grid-cols-2 sm:divide-x sm:divide-slate-200/80"]{
+    background: #0f1e2d;
+}
+
+div[data-top-panel="weekly"] ol{
+    grid-template-columns: none;
+}
+
+section[data-top-posts] header{
+    background: #0c1a27;
+}
+
+footer{
+    margin-top: 0;
+}
+
+aside[class="grid content-start gap-4 lg:sticky lg:top-24 lg:self-start"] div[class="overflow-hidden bg-identi-950 text-white"]{
+    border-radius: 5px;
+}
+
+aside[class="grid content-start gap-4 lg:sticky lg:top-24 lg:self-start"] div div{
+    padding: 0;
+}
+
+aside[class="grid content-start gap-4 lg:sticky lg:top-24 lg:self-start"] div div div{
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    overflow: hidden;
+}
+
+aside[class="grid content-start gap-4 lg:sticky lg:top-24 lg:self-start"] div div div div{
+    display: block;
+    line-height: 0;
+}
+
+aside[class="grid content-start gap-4 lg:sticky lg:top-24 lg:self-start"] div div div div strong{
+    font-size: 16px;
+}
+
+aside[class="grid content-start gap-4 lg:sticky lg:top-24 lg:self-start"] div div span{
+    width: 40px;
+    height: 40px;
+}
+
+aside[class="grid content-start gap-4 lg:sticky lg:top-24 lg:self-start"] div div span svg{
+    width: 20px;
+    height: 20px;
+}
+
+@media (width >= 64rem) {
+    .lg\:border-slate-100 {
+        border-color: rgba(255, 255, 255, .1);
+    }
+}
+
+@media (width >= 64rem) {
+    .lg\:grid-cols-4 {
+        display: block;
+    }
+}
+
+/*POSTS*/
+
+main:has(section#comentarios) article{
+    display: flex;
+    width: 64%;
+    margin: 20px auto;
+}
+
+body > main > article > div.mx-auto.max-w-4xl.px-4.py-10.sm\:px-6.lg\:px-8 > div{
+    padding: 0 20px 0 20px;
+}
+
+body > main > article > div.mx-auto.max-w-4xl.px-4.py-10.sm\:px-6.lg\:px-8{
+    padding: 5px 18px;
+    padding-top: 0;
+}
+
+main:has(section#comentarios) article h1:first-child{
+    margin-bottom: 20px;
+}
+
+body > main > article > header[class="border-b border-slate-200 bg-white"]{
+    border-radius: 5px;
+    border: 1px solid rgba(255,255,255,.1);
+    width: 25%;
+}
+
+.legacy-content{
+    margin-bottom: 20px;
+}
+
+body > main > article > div.mx-auto.max-w-4xl.px-4.py-10.sm\:px-6.lg\:px-8 > footer{
+    margin-top: 20px;
+}
+
+body > main > article > header > div > div > div.flex.items-center.gap-3{
+    flex-direction:column;
+}
+
+body > main > article > header > div > div > div.flex.items-center.gap-3 > a > span{
+    width: 100px;
+    height: 100px;
+}
+
+body > main > article > header > div > div{
+    border: none;
+    margin-top: 0;
+    padding-top: 0;
+    justify-content: center;
+}
+
+body > main > article > header > div{
+    padding: 20px;
+}
+
+body > main > article > header > div > div > div.flex.items-center.gap-3 > div > div{
+    flex-direction: column;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+body > main > article > header > div > div > div.flex.items-center.gap-3 > div > div > a{
+    font-size: 18px;
+}
+
+.categoria-post{
+    display:flex;
+    align-items:center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+}
+
+.categoria-post div{
+    margin: 0 20px;
+}
+
+#comentarios{
+    margin-top: 20px;
+    padding: 20px 0 0 0;
+    border-top: 1px solid rgba(255,255,255,.1)
+}
+
+article[data-comment-id]{
+    width: 100% !important;
+    margin: 0 !important;
+}
